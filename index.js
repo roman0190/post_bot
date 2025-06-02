@@ -53,8 +53,12 @@ cron.schedule("0 * * * *", async () => {
   }
 });
 
-//this is optional, just to test the AI endpoint
 app.get("/", async (req, res) => {
+  res.send("Welcome to the AI Content Generator for Facebook!");
+});
+
+//this is optional, just to test the AI endpoint
+app.get("/test", async (req, res) => {
   const content = await generateContent(generateDynamicPrompt());
   await postToFacebook(content);
   res.send("Done! Check your Facebook page for the new post.");
