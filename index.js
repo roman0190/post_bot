@@ -16,7 +16,7 @@ function generateDynamicPrompt() {
   const randomTopic = topics[Math.floor(Math.random() * topics.length)];
   const seed = Date.now(); // optional for uniqueness
 
-  return `Generate 10 unique technical interview questions and detailed answers on the topic: "${randomTopic}". The questions should vary from beginner to advanced level, covering core concepts, architecture, and best practices with hashTags except hashTags don't use ## and ** any where . [session:${seed}] `;
+  return `Generate 10 unique technical interview questions and detailed answers on the topic: "${randomTopic}". The questions should vary from beginner to advanced level, covering core concepts, architecture, and best practices with hashTags. [session:${seed}] `;
 }
 
 async function generateContent(prompt) {
