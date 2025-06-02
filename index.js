@@ -16,7 +16,7 @@ function generateDynamicPrompt() {
   const randomTopic = topics[Math.floor(Math.random() * topics.length)];
   const seed = Date.now(); // optional for uniqueness
 
-  return `Generate 10 unique technical interview questions and detailed answers on the topic: "${randomTopic}". The questions should vary from beginner to advanced level, covering core concepts, architecture, and best practices with hashTags. [session:${seed}] `;
+  return `Generate 10 unique technical interview questions and detailed answers on the topic: "${randomTopic}". The questions should vary from beginner to advanced level, covering core concepts, architecture, and best practices with hashTags except hashTags don't use ## and ** any where . [session:${seed}] `;
 }
 
 async function generateContent(prompt) {
@@ -57,8 +57,14 @@ app.get("/", async (req, res) => {
   res.send("Welcome to the AI Content Generator for Facebook!");
 });
 
-//this is optional, just to test the AI endpoint
-app.get("/test", async (req, res) => {
+// GET /test/your_secret_key hehehe you can't access this endpoint
+app.get("/test/:id", async (req, res) => {
+  const secret = req.params.id;
+
+  if (secret !== process.env.SECRET_KEY) {
+    return res.status(403).send("Unauthorized access");
+  }
+
   const content = await generateContent(generateDynamicPrompt());
   await postToFacebook(content);
   res.send("Done! Check your Facebook page for the new post.");
