@@ -1,0 +1,28 @@
+{
+  "name": "post_bot",
+  "version": "1.0.0",
+  "description": "An Express and Node.js-based automation bot that uses Facebook Graph API v23.0 to automatically post AI-generated content to a Facebook Page every hour. Ideal for hands-free content management and page engagement.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roman0190/post_bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roman0190/post_bot/issues"
+  },
+  "homepage": "https://github.com/roman0190/post_bot#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
