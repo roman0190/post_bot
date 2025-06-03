@@ -30,6 +30,7 @@ async function generateContent(prompt) {
     return res.data;
   } catch (error) {
     console.error("Error generating content:", error);
+    return null;
   }
 }
 async function postToFacebook(message) {
@@ -38,23 +39,15 @@ async function postToFacebook(message) {
       message: message,
       access_token: ACCESS_TOKEN,
     });
-    // console.log("Post response:", res.data);
+    return "Post successful: " + res;
   } catch (error) {
     console.error("Error posting to Facebook:", error);
+    return null
   }
 }
 
-// // Schedule every 1 hour
-// cron.schedule("0 * * * *", async () => {
-//   console.log("Running scheduled task to generate and post content...");
-//   const content = await generateContent(generateDynamicPrompt());
-//   if (content) {
-//     await postToFacebook(content);
-//   }
-// });
-
 app.get("/", async (req, res) => {
-  res.send("Welcome to the AI Content Generator for Facebook!");
+  res.send("Server is running");
 });
 
 // GET /test/your_secret_key hehehe you can't access this endpoint
@@ -67,7 +60,7 @@ app.get("/test/:id", async (req, res) => {
 
   const content = await generateContent(generateDynamicPrompt());
   await postToFacebook(content);
-  res.send("OK");
+  res.end();
 });
 
 app.listen(
