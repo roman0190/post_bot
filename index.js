@@ -12,7 +12,7 @@ const AI_ENDPOINT = process.env.AI_ENDPOINT;
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const SECRET_KEY = process.env.SECRET_KEY;
 
-const postQueue = []; // 🧠 in-memory store
+const postQueue = []; 
 console.log(postQueue);
 function generateDynamicPrompt() {
   const topics = process.env.TOPICS.split(",");
@@ -53,23 +53,22 @@ app.get("/", (req, res) => {
   res.send("✅ Server is running");
 });
 
-// ➕ Route: /generate/:id — generates and stores content
+
 app.get("/generate/:id", async (req, res) => {
   if (req.params.id !== SECRET_KEY)
     return res.status(403).send("❌ Unauthorized");
 
-  const prompt = generateDynamicPrompt();
-  const content = await generateContent(prompt);
+  res.send("⏳ Generating content in background...");
 
-  if (content) {
-    postQueue.push(content);
-    res.send(`✔️ Content added to queue. Queue length: ${postQueue.length}`);
-  } else {
-    res.status(500).send("❌ Failed to generate content.");
-  }
+  setTimeout(async () => {
+    const prompt = generateDynamicPrompt();
+    const content = await generateContent(prompt);
+    if (content) postQueue.push(content);
+    console.log("✅ Content generated and added to queue");
+  }, 100); // delay slightly just to offload main thread
 });
 
-// 📤 Route: /post/:id — posts one item and deletes it
+
 app.get("/post/:id", async (req, res) => {
   if (req.params.id !== SECRET_KEY)
     return res.status(403).send("❌ Unauthorized");
